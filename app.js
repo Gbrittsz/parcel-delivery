@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 4000;
 
 
 app.use(cors())
+app.use(express.json())
 
 const parcels =[
     {
@@ -53,7 +54,21 @@ app.get('/parcels/:id' , (req, res) => {
     else{
         res.sendStatus(400)
     }
-})
+});
+
+app.post('/parcels', (req, res) => {
+    const parcel = req.body;
+    try{
+        parcels.push(parcel);
+        res.status(201).json({data: parcel})
+
+    }
+    catch(err){
+        res.status(400).json
+
+    }
+        
+ })
 
 app.listen(PORT, () => {
     console.log(`connected to PORT ${PORT}`);
