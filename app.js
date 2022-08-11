@@ -14,26 +14,26 @@ const parcels =[
         id: 1,
         product: "Washing machine",
         description: "LG Washing Machine",
-        deliveryDate: "10/08/2022",
+        deliveryDate: new Date()
     },
     {
         id: 2,
         product: "Sewing Machine",
         description: "Two lion sewing machine domestic",
-        deliveryDate: "08/08/2022",
+        deliveryDate: new Date()
 
     },
     {
         id: 3,
         product: "steam iron",
         description: "Philips steam iron",
-        deliveryDate: "01/07/2022",
+        deliveryDate: new Date()
     },
     {
         id: 4,
         product: "Air conditioner",
         description: "TCL 1.5HP Air conditioner",
-        deliveryDate: "02/06/2022"
+        deliveryDate: new Date()
     }
 ]
 
@@ -68,6 +68,31 @@ app.post('/parcels', (req, res) => {
 
     }
         
+ })
+
+
+ app.put('/parcels/:parcelId/edit', (req, res) => {
+    let found = parcels.find((parcel) => {
+        return parcel.id === parseInt(req.params.parcelId)
+    }); 
+
+    if (found){
+        let updated = {
+            id: found.id,
+            product: req.body.product,
+            deliveryDate: new Date()
+        };
+
+
+        let targetIndex = parcels.indexOf(found);
+
+        parcels.splice(targetIndex, 1, updated);
+        res.sendStatus(204)
+
+    }
+
+    else
+    res.sendStatus(400);
  })
 
 app.listen(PORT, () => {
